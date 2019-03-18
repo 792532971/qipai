@@ -1,0 +1,53 @@
+{include file="common:meta" /}
+
+<title>修改密码 - 会员管理 - TXCMS_V2</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+</head>
+<body>
+<article class="cl pd-20">
+    <form action="{:url('lottery/lottery_edit')}" method="post" class="form form-horizontal" id="form_data">
+        <input type="hidden" name="id" id="id" value="{$data.id}">
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>转盘名称：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" autocomplete="off" id="lottery_name" name="lottery_name" value="{$data.lottery_name}">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>转盘所需经验：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" autocomplete="off" id="req_exp" name="req_exp" value="{$data.req_exp}">
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+                <input class="btn btn-primary radius" type="button" onclick="button_data();return false;" value="&nbsp;&nbsp;保存&nbsp;&nbsp;">
+            </div>
+        </div>
+    </form>
+</article>
+<!--/请在上方写此页面业务相关的脚本-->
+{load href="__STATIC__/admin/lib/layer/2.4/layer.js"}
+<script>
+    function button_data() {
+        var id = $('#id').val();
+        var lottery_name = $('#lottery_name').val();
+        var req_exp = $('#req_exp').val();
+        var url = "{:url('lottery/lotteryEditSave')}";
+        $.post(url,{'id':id,'lottery_name':lottery_name,'req_exp':req_exp},function (res) {
+            if(res.code === 1){
+                layer.msg(res.msg);
+                var index = parent.layer.getFrameIndex(window.name);
+                setTimeout(function(){
+                    parent.location.reload(); //刷新父级页面
+                    parent.layer.close(index);//关闭弹出层
+                }, 1000);
+            }else{
+                layer.msg(res.msg);
+            }
+        })
+    }
+</script>
+</body>
+</html>

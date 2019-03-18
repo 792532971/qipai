@@ -1,0 +1,79 @@
+{include file="common:meta" /}
+
+<title>管理员列表 - 管理员列表 - TXCMS_V2</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+</head>
+<body>
+{include file="common:header" /}
+
+{include file="common:menu" /}
+
+<section class="Hui-article-box">
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> <a href="{:url('index/index')}">首页</a>
+        <span class="c-gray en">&gt;</span>
+        消息管理
+        <span class="c-gray en">&gt;</span>
+        顶部消息 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a> </nav>
+    <div class="Hui-article">
+
+        <article class="cl pd-20">
+            <div class="cl pd-5 bg-1 bk-gray mt-20">
+                <span class="l"> <a href="javascript:;" onclick="top_add('添加顶部消息','/admin.php/admin/top_info/add','800','500')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加浮动消息</a> </span>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-border table-bordered table-bg">
+                    <thead>
+                    <tr>
+                        <th scope="col" colspan="9">消息列表</th>
+                    </tr>
+                    <tr class="text-c">
+                        <th width="10">ID</th>
+                        <th width="40">消息内容</th>
+                        <th width="40">消息类型</th>
+                        <th width="40">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {volist name="data" id="vo"}
+                    <tr class="text-c">
+                        <td>{$vo.id}</td>
+                        <td>{$vo.information}</td>
+                        <td>{$vo.type}</td>
+                        <td>
+                            <a class="btn btn-warning-outline radius size-MINI" onclick="top_del({$vo.id})">删除</a>
+                        </td>
+                    </tr>
+                    {/volist}
+                    </tbody>
+                </table>
+            </div>
+        </article>
+        <div style="float: right;">{$page}</div>
+    </div>
+</section>
+{include file="common:footer" /}
+<!--请在下方写此页面业务相关的脚本-->
+{load href="__STATIC__/admin/lib/My97DatePicker/4.8/WdatePicker.js"}
+{load href="__STATIC__/admin/lib/datatables/1.10.0/jquery.dataTables.min.js"}
+{load href="__STATIC__/admin/lib/laypage/1.2/laypage.js"}
+<script type="text/javascript">
+    /*浮动消息删除*/
+    function top_del(id){
+        $.get("{:url('top_info/del')}",{'id':id},function (res) {
+            if(res.code === 1){
+                layer.msg(res.msg,{icon:1});
+                window.location.reload();
+            }else{
+                layer.msg(res.msg,{icon:2})
+            }
+        },'json')
+    }
+    /*浮动消息-添加*/
+    function top_add(title,url,id,w,h){
+        layer_show(title,url,w,h);
+    }
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

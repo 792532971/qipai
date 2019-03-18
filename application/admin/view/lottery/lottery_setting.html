@@ -1,0 +1,74 @@
+{include file="common:meta" /}
+
+<title>会员管理 - 会员充值 - TXCMS_V2</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+</head>
+<body>
+<article class="cl pd-20">
+    <form action="" method="post" class="form form-horizontal" >
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*概率(%)</span></label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="hidden" value="{$lev}" id="lev" name="lev">
+                <input type="text" class="input-text" autocomplete="off" name="pro" id="pro" value="{$data.pro}">
+                <span style="color: #ff0000;font-size: xx-small">中奖百分比:概率越高中奖几率越大</span>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>级别：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" autocomplete="off" readonly="readonly" name="prize" id="prize" value="{$data.prize}">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>数量：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" autocomplete="off" name="num" id="num" value="{$data.num}">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>奖品名称：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" autocomplete="off" name="prize_name" id="prize_name" value="{$data.prize_name}">
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+                <input class="btn btn-primary radius" type="button" onclick="tijiao({$data.id});" value="&nbsp;&nbsp;确认配置&nbsp;&nbsp;">
+            </div>
+        </div>
+    </form>
+</article>
+{include file="common:footer" /}
+
+<script type="text/javascript">
+    function tijiao(id){
+        var pro = $('#pro').val();
+        var num = $('#num').val();
+        var lev = $('#lev').val();
+        var prize_name = $('#prize_name').val();
+        $.ajax({
+            url:"{:url('lottery/settingEditSave')}",
+            data:{'id':id,'pro':pro,'num':num,'prize_name':prize_name,'lev':lev},
+            type:'post',
+            dataType:'json',
+            success:function (res) {
+                if(res.code === 1){
+                    layer.msg(res.msg,{icon:1});
+//                    var index1 = parent.layer.getFrameIndex(window.name);
+//                    setTimeout(function(){
+//                        parent.location.reload();
+//                        parent.layer.close(index1);//关闭弹出层
+//                    }, 1000);
+                }else{
+                    layer.msg(res.msg,{icon:2})
+                }
+            }
+
+        })
+    }
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

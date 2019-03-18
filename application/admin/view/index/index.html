@@ -1,0 +1,77 @@
+{include file="common:meta" /}
+
+<title>TXCMS_V2后台管理系统</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+</head>
+<body>
+{include file="common:header" /}
+
+{include file="common:menu" /}
+
+<section class="Hui-article-box">
+    <nav class="breadcrumb"><i class="Hui-iconfont"></i> <a href="{:url('index/index')}" class="maincolor">首页</a>
+        <span class="c-999 en">&gt;</span>
+        <span class="c-666">我的桌面</span>
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <div class="Hui-article">
+        <article class="cl pd-20">
+            <p class="f-20 text-success">欢迎使用TXCMS
+                后台管理系统！</p>
+            <p>上次登录IP：{$Request.session.admin_login_log.ip}  上次登录时间：{$Request.session.admin_login_log.create_time}</p>
+            <table class="table table-border table-bordered table-bg mt-20">
+                <thead>
+                <tr>
+                    <th colspan="2" scope="col">服务器信息</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th width="30%">当前域名</th>
+                    <td><span>{$config.url}</span></td>
+                </tr>
+                <tr>
+                    <th width="30%">网站目录</th>
+                    <td><span>{$config.document_root}</span></td>
+                </tr>
+                <tr>
+                    <th width="30%">操作系统</th>
+                    <td><span>{$config.server_os}</span></td>
+                </tr>
+                <tr>
+                    <th width="30%">服务器端口</th>
+                    <td><span>{$config.server_port}</span></td>
+                </tr>
+                <tr>
+                    <th width="30%">服务器ip</th>
+                    <td><span>{$config.server_ip}</span></td>
+                </tr>
+                <tr>
+                    <th width="30%">WEB运行环境</th>
+                    <td><span>{$config.server_soft}</span></td>
+                </tr>
+                <tr>
+                    <th width="30%">php版本</th>
+                    <td><span>{$config.php_version}</span></td>
+                </tr>
+                <tr>
+                    <th width="30%">mysql版本</th>
+                    <td><span>{$config.mysql_version}</span></td>
+                </tr>
+                <tr>
+                    <th width="30%">最大上传限制</th>
+                    <td><span>{$config.max_upload_size}</span></td>
+                </tr>
+                </tbody>
+            </table>
+        </article>
+        <footer class="footer">
+            <p>感谢使用TXCMS后台管理系统<br> Copyright &copy;2018 TXCMS_V1 All Rights Reserved.<br> 本后台系统由<a href="http://#/" target="_blank" title="TXCMS">txcms</a>天下纵横文化传播提供技术支持</p>
+        </footer>
+    </div>
+</section>
+
+{include file="common:footer" /}
+
+</body>
+</html>

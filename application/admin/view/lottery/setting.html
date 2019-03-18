@@ -1,0 +1,146 @@
+{include file="common:meta" /}
+
+<title>游戏管理 - 百人牛牛 - TXCMS_V2</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+{load href="__STATIC__/admin/layui/dist/css/layui.css"}
+</head>
+<body>
+{include file="common:header" /}
+
+{include file="common:menu" /}
+
+<section class="Hui-article-box">
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> <a href="{:url('index/index')}">首页</a>
+        <span class="c-gray en">&gt;</span>
+        转盘管理
+        <span class="c-gray en">&gt;</span>
+        轮盘设置 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a> </nav>
+    <div id="tab_demo" class="HuiTab">
+        <div class="tabBar clearfix"><span>白银轮盘</span><span>黄金轮盘</span><span>钻石轮盘</span></div>
+        <div class="tabCon">
+            <!--房间配置-->
+            <div class="table-responsive">
+                <table class="table table-border table-bordered table-bg">
+                    <thead>
+                    <tr class="text-c">
+                        <th width="10">id</th>
+                        <th width="10">级别</th>
+                        <th width="40">转盘概率</th>
+                        <th width="40">数量(num)</th>
+                        <th width="40">奖品名称</th>
+                        <th width="40">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {volist name="lottery_pri" id="vo_1"}
+                    <tr class="text-c">
+                        <td>{$vo_1.id}</td>
+                        <td>{$vo_1.prize}</td>
+                        <td>{$vo_1.pro}%</td>
+                        <td>{$vo_1.num}</td>
+                        <td>{$vo_1.prize_name}</td>
+                        <td>
+                            <a title="编辑" href="javascript:;" onclick="edit_lottery_setting('配置','/admin.php/admin/lottery/lottery_setting?id={$vo_1.id}&lev=1','1','800','500')" class="ml-5 btn btn-success-outline radius size-MINI" style="text-decoration:none">配置编辑</a>
+                        </td>
+                    </tr>
+                    {/volist}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="tabCon">
+            <!--游戏配置-->
+            <table class="table table-border table-bordered table-bg">
+                <thead>
+                <tr class="text-c">
+                    <th width="10">id</th>
+                    <th width="10">级别</th>
+                    <th width="40">转盘概率</th>
+                    <th width="40">数量(num)</th>
+                    <th width="40">奖品名称</th>
+                    <th width="40">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="lottery_mid" id="vo_2"}
+                <tr class="text-c">
+                    <td>{$vo_2.id}</td>
+                    <td>{$vo_2.prize}</td>
+                    <td>{$vo_2.pro}%</td>
+                    <td>{$vo_2.num}</td>
+                    <td>{$vo_2.prize_name}</td>
+                    <td>
+                        <a title="编辑" href="javascript:;" onclick="edit_lottery_setting('配置','/admin.php/admin/lottery/lottery_setting?id={$vo_2.id}&lev=2','1','800','500')" class="ml-5 btn btn-success-outline radius size-MINI" style="text-decoration:none">配置编辑</a>
+                    </td>
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+        </div>
+        <div class="tabCon">
+            <!--房间配置-->
+            <div class="table-responsive">
+                <table class="table table-border table-bordered table-bg">
+                    <thead>
+                    <tr class="text-c">
+                        <th width="10">id</th>
+                        <th width="10">级别</th>
+                        <th width="40">转盘概率</th>
+                        <th width="40">数量(num)</th>
+                        <th width="40">奖品名称</th>
+                        <th width="40">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {volist name="lottery_hig" id="vo_3"}
+                    <tr class="text-c">
+                        <td>{$vo_3.id}</td>
+                        <td>{$vo_3.prize}</td>
+                        <td>{$vo_3.pro}%</td>
+                        <td>{$vo_3.num}</td>
+                        <td>{$vo_3.prize_name}</td>
+                        <td>
+                            <a title="编辑" href="javascript:;" onclick="edit_lottery_setting('配置','/admin.php/admin/lottery/lottery_setting?id={$vo_3.id}&lev=3','1','800','500')" class="ml-5 btn btn-success-outline radius size-MINI" style="text-decoration:none">配置编辑</a>
+                        </td>
+                    </tr>
+                    {/volist}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{load href="__STATIC__/admin/layui/dist/layui.all.js"}
+{include file="common:footer" /}
+<!--请在下方写此页面业务相关的脚本-->
+{load href="__STATIC__/admin/lib/My97DatePicker/4.8/WdatePicker.js"}
+{load href="__STATIC__/admin/lib/datatables/1.10.0/jquery.dataTables.min.js"}
+{load href="__STATIC__/admin/lib/laypage/1.2/laypage.js"}
+<script type="text/javascript">
+    $(function(){ $('#tab_demo').Huitab();});
+    function edit_lottery_setting(title,url,id,w,h){
+        layer_show(title,url,w,h);
+    }
+    layui.use('form', function(){
+        var form = layui.form;
+        form.on('switch(switch)', function(data) {
+            var url = $(this).data('url');
+            var status = data.elem.checked;//开关是否开启，true或者false
+            //后台我需要的是0或1，所以预先在js中处理change的值
+            if(status) {
+                status = 1;
+            } else {
+                status = 0;
+            }
+            $.post(url, {status: status}, function(res) {
+                if(res.code) {
+                    layer.msg(res.msg);
+                }
+            });
+        });
+    });
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

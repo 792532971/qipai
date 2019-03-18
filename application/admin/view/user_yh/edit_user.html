@@ -1,0 +1,77 @@
+{include file="common:meta" /}
+
+<title>添加用户 - TXCMS_V2</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+</head>
+<body>
+<article class="cl pd-20">
+    <form action="/admin.php/admin/user_yh/editSave" method="post" class="form form-horizontal">
+        <input type="hidden" name="id" value="{$data.id}">
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>昵称：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="{$data.nickname}" placeholder="" id="nickname" name="nickname">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red"></span>账号：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" disabled="disabled" value="{$data.username}" placeholder="" id="username" name="username">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>手机：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="{$data.phone}" name="phone" id="phone">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red"></span>注册时间：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" disabled="disabled" value="{$data.create_time}" name="create_time" id="create_time">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>状态：</label>
+            <div class="formControls col-xs-8 col-sm-9 skin-minimal">
+                <div class="radio-box">
+                    <input name="status" value=1 type="radio" id="sex-1" checked>
+                    <label for="sex-1">正式</label>
+                </div>
+                <div class="radio-box">
+                    <input type="radio" id="sex-2" value=0 name="status">
+                    <label for="sex-2">游客</label>
+                </div>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>是否锁定：</label>
+            <div class="formControls col-xs-8 col-sm-9 skin-minimal">
+                <div class="radio-box">
+                    <input name="lock" type="radio" value=0  checked>
+                    <label for="sex-1">否</label>
+                </div>
+                <div class="radio-box">
+                    <input type="radio" value=1 name="lock">
+                    <label for="sex-2">是</label>
+                </div>
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+                <button class="btn btn-primary radius"  value="&nbsp;&nbsp;修改&nbsp;&nbsp;">修改</button>
+            </div>
+        </div>
+    </form>
+</article>
+
+{include file="common:footer" /}
+
+<!--请在下方写此页面业务相关的脚本-->
+{load href="__STATIC__/admin/lib/My97DatePicker/4.8/WdatePicker.js"}
+{load href="__STATIC__/admin/lib/jquery.validation/1.14.0/jquery.validate.js"}
+{load href="__STATIC__/admin/lib/jquery.validation/1.14.0/validate-methods.js"}
+{load href="__STATIC__/admin/lib/jquery.validation/1.14.0/messages_zh.js"}
+</body>
+</html>

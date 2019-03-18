@@ -1,0 +1,74 @@
+{include file="common:meta" /}
+
+    <title>新增文章 - 文章管理 - TXCMS_V2</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+</head>
+<body>
+<article class="page-container">
+    <form class="form form-horizontal" id="form-article-add" method="post" enctype="multipart/form-data" action="{:url('article/add')}">
+        <input type="hidden" name="uid" value="{$Think.session.id}">
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>文章标题：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="" placeholder="" name="title">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>文章小标题：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="" placeholder="" name="s_title">
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>文章分类：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <select name="cate_id">
+                    {volist name="data" id="vo"}
+                    <option value="{$vo.id}">{$vo.catename}</option>
+                    {/volist}
+                </select>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">文章作者：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" disabled="disabled" value="{$Request.session.admin.username}"  name="author">
+            </div>
+        </div>
+
+        <div class="row cl" >
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>状态:</label>
+                <div class="radio-box">
+                    <input name="status" type="radio" value=0 class="btn btn-default radius" id="sex-1" checked>
+                    <label for="sex-1">显示</label>
+                </div>
+                <div class="radio-box">
+                    <input type="radio" id="sex-2" value=1 class="btn btn-default radius" name="status">
+                    <label for="sex-2">隐藏</label>
+                </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">上传文件：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="file" class="input-text" style="border: hidden" value=""  name="file">
+            </div>
+        </div>
+        <div class="row cl">
+        <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+        <button class="btn btn-primary radius" id="button"><i class="Hui-iconfont">&#xe632;</i> 保存并提交审核</button>
+        </div>
+
+                </div>
+                </form>
+                </article>
+{include file="common:footer" /}
+{load href="__STATIC__/admin/lib/My97DatePicker/4.8/WdatePicker.js"}
+{load href="__STATIC__/admin/lib/jquery.validation/1.14.0/jquery.validate.js"}
+{load href="__STATIC__/admin/lib/jquery.validation/1.14.0/validate-methods.js"}
+{load href="__STATIC__/admin/lib/jquery.validation/1.14.0/messages_zh.js"}
+{load href="__STATIC__/admin/lib/webuploader/0.1.5/webuploader.min.js"}
+</body>
+</html>

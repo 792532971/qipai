@@ -1,0 +1,33 @@
+{include file="common:meta" /}
+
+<title>资金管理 - 资金明细 - TXCMS_V2</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+</head>
+<body>
+<article class="cl pd-20">
+    <div>
+    <p>房间级别::&nbsp;{$level}</p>
+    <p>庄家名称:&nbsp;{$data.banker_id}<p/>
+        <p>庄家选择倍数:&nbsp;&nbsp;<span style="color: #f00">{$data.banker_mul}倍</span><p/>
+    <p>玩家选择倍数:&nbsp;{volist name="$data.bet_mul" id="vo"}{$key} -- <span style="color: #FF0000">{$vo}倍</span>;&nbsp;&nbsp;{/volist}<p/>
+    <p>玩家牌面<br/>
+        {volist name="$data.poker" id="vo"}
+         &nbsp;{$key}&nbsp;(
+        {if condition="$vo.size eq 0"} 没牛
+        {elseif condition="$vo.size eq 10"/}<span style="color: #BA55D3">牛牛</span>--牛{$vo.size}
+        {elseif condition="$vo.size eq 11"/}<span style="color: #770088">五花牛</span>--牛{$vo.size}
+        {elseif condition="$vo.size eq 12"/}<span style="color: #FF0000">炸</span>--牛{$vo.size}
+        {else /} <span style="color: #00B83F">有牛</span>--牛{$vo.size}
+        {/if})
+        ;&nbsp;&nbsp;输赢:&nbsp;{$vo.win}&nbsp;&nbsp;
+        牌面:&nbsp;{volist name="$vo.poker" id="v"}
+        &nbsp;&nbsp;&nbsp;&nbsp;{$v}
+            {/volist}<br/><br/>
+        {/volist}<p/>
+    </div>
+</article>
+
+{include file="common:footer" /}
+</body>
+</html>

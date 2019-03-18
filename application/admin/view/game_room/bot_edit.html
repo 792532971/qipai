@@ -1,0 +1,58 @@
+{include file="common:meta" /}
+
+<title>会员管理 - 会员充值 - TXCMS_V2</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+</head>
+<body>
+<article class="cl pd-20">
+    <form action="{:url('user/chongzhiSave')}" method="post" class="form form-horizontal" >
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>底分：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" autocomplete="off" name="bot" id="bot" value="{$data.bot}">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>入场限制：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" autocomplete="off" name="stint" id="stint" value="{$data.stint}">
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+                <input class="btn btn-primary radius" type="button" onclick="tijiao({$data.id});" value="&nbsp;&nbsp;确认配置&nbsp;&nbsp;">
+            </div>
+        </div>
+    </form>
+</article>
+{include file="common:footer" /}
+
+<script type="text/javascript">
+    function tijiao(id){
+        var bot = $('#bot').val();
+        var stint = $('#stint').val();
+        $.ajax({
+            url:"{:url('game_room/edit_save')}",
+            data:{'id':id,'bot':bot,'stint':stint},
+            type:'post',
+            dataType:'json',
+            success:function (res) {
+                if(res.code === 1){
+                    layer.msg(res.msg,{icon:1});
+                    var index1 = parent.layer.getFrameIndex(window.name);
+                    setTimeout(function(){
+                        parent.location.reload();
+                        parent.layer.close(index1);//关闭弹出层
+                    }, 2000);
+                }else{
+                    layer.msg(res.msg,{icon:2})
+                }
+            }
+
+        })
+    }
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

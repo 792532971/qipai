@@ -1,0 +1,129 @@
+{include file="common:meta" /}
+
+<title>添加邮件 - 邮件管理 - TXCMS_V2</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+</head>
+<body>
+<article class="cl pd-20">
+    <form action="" method="post" class="form form-horizontal form-email-edits">
+        <input type="hidden" name="id" value="{$data.id}">
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>用户id：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="{$data.user_id}" placeholder="" id="user_id" name="user_id">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>内容：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="{$data.context}" placeholder="" id="context" name="context">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>状态：</label>
+            <div class="formControls col-xs-8 col-sm-9 skin-minimal">
+                <div class="radio-box">
+                    <input name="status" type="radio" value=0  {if condition="$data.status==0" }checked{/if}>
+                    <label>未读</label>
+                </div>
+                <div class="radio-box">
+                    <input type="radio" value=1 name="status" {if condition="$data.status==1" }checked{/if}>
+                    <label>已读</label>
+                </div>
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+                <input class="btn btn-primary radius" type="button" id="button" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+            </div>
+        </div>
+    </form>
+</article>
+
+{include file="common:footer" /}
+
+<!--请在下方写此页面业务相关的脚本-->
+{load href="__STATIC__/admin/lib/jquery.validation/1.14.0/jquery.validate.js"}
+{load href="__STATIC__/admin/lib/jquery.validation/1.14.0/validate-methods.js"}
+{load href="__STATIC__/admin/lib/jquery.validation/1.14.0/messages_zh.js"}
+<script type="text/javascript">
+    $(function(){
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+
+        $("#form-admin-add").validate({
+            rules:{
+                adminName:{
+                    required:true,
+                    minlength:4,
+                    maxlength:16
+                },
+                password:{
+                    required:true,
+                },
+                password2:{
+                    required:true,
+                    equalTo: "#password"
+                },
+                sex:{
+                    required:true,
+                },
+                phone:{
+                    required:true,
+                    isPhone:true,
+                },
+                email:{
+                    required:true,
+                    email:true,
+                },
+                adminRole:{
+                    required:true,
+                },
+            },
+            onkeyup:false,
+            focusCleanup:true,
+            success:"valid",
+            submitHandler:function(form){
+                $(form).ajaxSubmit();
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.$('.btn-refresh').click();
+                parent.layer.close(index);
+            }
+        });
+    });
+
+    $('#button').click(function () {
+        var formData  = $('.form-email-edits').serialize();
+        $.ajax({
+            url:"{:url('email/edit')}",
+            type:'post',
+            data:formData,
+            success:function (res) {
+                if(res.code === 0 ){
+                    //失败
+                    layer.msg(res.msg,{icon:2},300);
+                    var index = parent.layer.getFrameIndex(window.name);
+                    setTimeout(function(){
+                        parent.location.reload(); //刷新父级页面
+                        parent.layer.close(index);//关闭弹出层
+                    }, 2000);
+                }else{
+                    //成功
+                    layer.msg(res.msg,{icon:1},300);
+                    var index1 = parent.layer.getFrameIndex(window.name);
+                    setTimeout(function(){
+                        parent.location.reload();
+                        parent.layer.close(index1);//关闭弹出层
+                    }, 2000);
+                }
+            }
+        })
+    })
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

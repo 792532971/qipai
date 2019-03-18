@@ -1,0 +1,118 @@
+{include file="common:meta" /}
+
+<title>游戏列表 - 游戏列表 - TXCMS_V2</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+{load href="__STATIC__/admin/layui/dist/css/layui.css"}
+
+</head>
+<body>
+{include file="common:header" /}
+
+{include file="common:menu" /}
+
+<section class="Hui-article-box">
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> <a href="{:url('index/index')}">首页</a>
+        <span class="c-gray en">&gt;</span>
+        游戏管理
+        <span class="c-gray en">&gt;</span>
+        游戏列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a> </nav>
+    <div class="Hui-article">
+        <article class="cl pd-20">
+            <table class="table table-border table-bordered table-bg">
+                <thead>
+                <tr>
+                    <th scope="col" colspan="9">游戏列表</th>
+                </tr>
+                <tr class="text-c">
+                    <th width="40">ID</th>
+                    <th width="150">游戏名</th>
+                    <th width="90">配置</th>
+                    <th width="150">游戏状态</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="data" id="vo"}
+                <tr class="text-c" style="height: 10px;">
+                    <td>{$vo.id}</td>
+                    <td>{$vo.name}</td>
+                    <td>
+                        <a style="text-decoration:none" class="btn btn-primary radius size-MINI" onClick="change_setting('修改配置','/admin.php/admin/game_list/changeSetting?id={$vo.id}','10001','600','270')" href="javascript:;" title="修改配置">修改配置</a>
+                    </td>
+                    <td style="width: 40px;">
+                        <form class="layui-form">
+                            <div class="layui-form-item">
+                                <div class="layui-input-block" style="margin-left: 0">
+                                    <input type="checkbox" lay-skin="switch" {$vo.status? "checked=''": ""} lay-filter="switch" data-url="{:url('game_list/changeShow',array('id'=>$vo['id']))}" lay-text="on|off">
+                                </div>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+        </article>
+        <div style="float: right;">{$page}</div>
+    </div>
+</section>
+{load href="__STATIC__/admin/layui/dist/layui.all.js"}
+{include file="common:footer" /}
+
+<!--请在下方写此页面业务相关的脚本-->
+{load href="__STATIC__/admin/lib/My97DatePicker/4.8/WdatePicker.js"}
+{load href="__STATIC__/admin/lib/datatables/1.10.0/jquery.dataTables.min.js"}
+{load href="__STATIC__/admin/lib/laypage/1.2/laypage.js"}
+<script type="text/javascript">
+    /*
+     参数解释：
+     title	标题
+     url		请求的url
+     id		需要操作的数据id
+     w		弹出层宽度（缺省调默认值）
+     h		弹出层高度（缺省调默认值）
+     */
+    /*管理员-增加*/
+    function admin_add(title,url,w,h){
+        layer_show(title,url,w,h);
+    }
+    /*管理员-删除*/
+    function admin_del(id){
+        $.post('/admin.php/admin/admin/del',{'id':id},function(res){
+            if(res.code=0){
+                layer.msg(res.msg);
+                setTimeout(function () {
+                    window.location.reload()
+                },2000)
+            }else{
+                layer.msg(res.msg);
+            }
+        },'json')
+    }
+
+    /*修改配置*/
+    function change_setting(title,url,id,w,h){
+        layer_show(title,url,w,h);
+    }
+    layui.use('form', function(){
+        var form = layui.form;
+        form.on('switch(switch)', function(data) {
+            var url = $(this).data('url');
+            var status = data.elem.checked;//开关是否开启，true或者false
+            //后台我需要的是0或1，所以预先在js中处理change的值
+            if(status) {
+                status = 1;
+            } else {
+                status = 0;
+            }
+            $.post(url, {status: status}, function(res) {
+                if(res.code) {
+                    layer.msg(res.msg);
+                }
+            });
+        });
+    });
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

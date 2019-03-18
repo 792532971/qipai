@@ -1,0 +1,117 @@
+{include file="common:meta" /}
+<title>会员列表 - 会员管理 - TXCMS_V2</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+</head>
+<body>
+{include file="common:header" /}
+{include file="common:menu" /}
+
+<section class="Hui-article-box">
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> <a href="{:url('index/index')}">首页</a> <span class="c-gray en">&gt;</span> 游戏列表 <span class="c-gray en">&gt;</span> 对局记录<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <div class="Hui-article">
+        <article class="cl pd-20">
+            <div class="mt-20">
+                <div class="table-responsive">
+                <form class="form-inline" role="form" method="get" action="{:url('game_play_log/index')}">
+                    <div class="form-group">
+                        <span style="color: red;">对局明细</span>
+                        游戏名称:<input style="width: 120px;" type="text" class="input-text" name="game" placeholder="请输入游戏名" value="{$game ? $game : '';}">
+                        开始时间：<input type="text" class="input-text radius size-S" style="width: 100px;" autocomplete="off" name="start" value="{$start ? $start : '';}" id="test1">-<input type="text" class="input-text radius size-S" style="width: 100px;" autocomplete="off" name="end" value="{$end ? $end : '';}" id="test2">
+                    </div>
+                    <button type="submit" class="btn btn-default">查询</button>
+                </form>
+                <table class="table table-border table-bordered table-hover table-bg table-sort">
+                    <thead>
+                    <tr class="text-c">
+                        <th width="20">ID</th>
+                        <th width="60">游戏名称</th>
+                        <th width="60">级别</th>
+                        <th width="90">房间号</th>
+                        <th width="50">开始时间</th>
+                        <th width="50">结束时间</th>
+                        <th width="50">详情</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {volist name="data" id="vo"}
+                    <tr class="text-c">
+                        <td>{$vo.gid}</td>
+                        <td>{$vo.name}</td>
+                        <td>{$vo.level}</td>
+                        <td>{$vo.rid}</td>
+                        <td>{$vo.create_time}</td>
+                        <td>{$vo.end_time}</td>
+                        <td>
+                            <a onclick="duiju({$vo.gid})">详情</a>
+                        </td>
+                    </tr>
+                    {/volist}
+                    </tbody>
+                </table>
+                </div>
+                {$quick ?? ''}
+            </div>
+        </article>
+        <div style="float: right;">{$page}</div>
+    </div>
+</section>
+{include file="common:footer" /}
+
+<!--请在下方写此页面业务相关的脚本-->
+{load href="__STATIC__/admin/lib/My97DatePicker/4.8/WdatePicker.js"}
+{load href="__STATIC__/admin/lib/datatables/1.10.0/jquery.dataTables.min.js"}
+{load href="__STATIC__/admin/lib/laypage/1.2/laypage.js"}
+<script type="text/javascript">
+
+    laydate.render({
+        elem: '#test1' //指定元素
+        ,calendar: true
+        ,theme: '#333'
+        ,showBottom: true
+    });
+    laydate.render({
+        elem: '#test2' //指定元素
+        ,calendar: true
+        ,theme: '#333'
+        ,showBottom: true
+    });
+
+    function duiju(id){
+        $.post("{:url('detail/duiju')}", {'id':id}, function(result){
+            result=JSON.parse(result);
+            console.log(result.poker);
+
+            temp = '';
+            for(var i in result.bet_mul){
+                temp += '玩家'+i+':'+result.bet_mul[i]+'&nbsp';
+            }
+            poker = [];
+            acc = '';
+            for(var p in result.poker){
+                poker += '玩家 :'+p+'<br/><br/><br/>';
+                for(var j in result.poker[p]){
+                    acc += j+':'+result.poker[p][j]+'<br/>';
+                }
+            }
+            layer.open({
+                type: 1,
+                title: '对局明细',
+                shadeClose: true,
+                skin: 'layui-layer-rim', //加上边框
+                area:['400px', '500px'],
+                content:
+//                '庄家id:'
+//                +result.banker_id+
+//                '<br/>'+'庄家选择倍数:'+result.banker_mul+'<br/>'+'玩家选择倍数:'+temp+'<br/>'+'玩家牌面<br/>'+poker+acc
+                '<div  style="width:400px;position: absolute"><div style="height:50px;width: 400px;">庄家id:'+result.banker_id+'&nbsp;&nbsp;庄家选择倍数:'+result.banker_mul+'<br/>玩家选择倍数:'+temp+'</div><div style="width:100px;height:250px;float:left;text-align: center">'+poker+'<br/></div><div style="width:200px;height:250px;float:right;">'+acc+'</div></div>'
+            });
+
+        });
+    }
+
+
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

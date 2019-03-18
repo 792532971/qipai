@@ -1,0 +1,97 @@
+{include file="common:meta" /}
+
+<title>管理员列表 - 管理员列表 - TXCMS_V2</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+</head>
+<body>
+{include file="common:header" /}
+
+{include file="common:menu" /}
+
+<section class="Hui-article-box">
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> <a href="{:url('index/index')}">首页</a>
+        <span class="c-gray en">&gt;</span>
+        房间管理
+        <span class="c-gray en">&gt;</span>
+        房间列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a> </nav>
+    <div class="Hui-article">
+        <article class="cl pd-20">
+            <div class="table-responsive">
+                <table class="table table-border table-bordered table-bg">
+                    <thead>
+                    <tr>
+                        <th scope="col" colspan="9">房间列表</th>
+                    </tr>
+                    <tr class="text-c">
+                        <th width="10">房间ID</th>
+                        <th width="40">游戏名</th>
+                        <th width="40">级别</th>
+                        <th width="40">底分</th>
+                        <th width="40">入场限制</th>
+                        <th width="40">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {volist name="data" id="vo"}
+                    <tr class="text-c">
+                        <td>{$vo.id}</td>
+                        <td>{$vo.game_name}</td>
+                        <td>{$vo.level}</td>
+                        <td>
+                            {$vo.bot}
+                        </td>
+                        <td>{$vo.stint}</td>
+                        <td>
+                            <a title="编辑" href="javascript:;" onclick="edit_room_setting('底分入场限制编辑','/admin.php/admin/game_room/bot_edit?id={$vo.id}','1','800','500')" class="ml-5 btn btn-success-outline radius size-MINI" style="text-decoration:none">配置编辑</a>
+                        </td>
+                    </tr>
+                    {/volist}
+                    </tbody>
+                </table>
+            </div>
+        </article>
+        <div style="float: right;">{$page}</div>
+    </div>
+</section>
+{include file="common:footer" /}
+<!--请在下方写此页面业务相关的脚本-->
+{load href="__STATIC__/admin/lib/My97DatePicker/4.8/WdatePicker.js"}
+{load href="__STATIC__/admin/lib/datatables/1.10.0/jquery.dataTables.min.js"}
+{load href="__STATIC__/admin/lib/laypage/1.2/laypage.js"}
+<script type="text/javascript">
+    /*卡号-编辑*/
+    function edit_room_setting(title,url,id,w,h){
+        layer_show(title,url,w,h);
+    }
+    /*
+     参数解释：
+     title	标题
+     url		请求的url
+     id		需要操作的数据id
+     w		弹出层宽度（缺省调默认值）
+     h		弹出层高度（缺省调默认值）
+     */
+    /*管理员-增加*/
+    function admin_add(title,url,w,h){
+        layer_show(title,url,w,h);
+    }
+    /*管理员-删除*/
+    function admin_del(id){
+        $.post('/admin.php/admin/email/del',{'id':id},function (res) {
+            if(res.code = 0){
+                layer.msg(res.msg);
+                setTimeout(function () {parent.location.reload()},2000)
+            }else{
+                layer.msg(res.msg);
+            }
+        })
+    }
+    /*管理员-编辑*/
+    function admin_edit(title,url,id,w,h){
+        layer_show(title,url,w,h);
+    }
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

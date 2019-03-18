@@ -1,0 +1,25 @@
+{include file="common:meta" /}
+
+<title>资金管理 - 资金明细 - TXCMS_V2</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+</head>
+<body>
+<article class="cl pd-20">
+    <div>
+        <p>庄家:{$lost}</p>
+        <p>用户下注:
+            {volist name="bet_num" id="vo" key="k" }
+                {if condition="is_array($vo)"}
+                    {volist name="vo" id="voo" key="kk"}
+                        <br/>{$key}-{$voo}
+                    {/volist}
+                {/if}
+            {/volist}
+        </p>
+    </div>
+</article>
+
+{include file="common:footer" /}
+</body>
+</html>

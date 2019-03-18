@@ -1,0 +1,107 @@
+{include file="common:meta" /}
+
+    <title>添加用户 - TXCMS_V2</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+</head>
+<body>
+<article class="cl pd-20">
+    <form action="" method="post" class="form form-horizontal form-agent-adda" id="form-member-add">
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>昵称：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="" placeholder="" id="nickname" name="nickname">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>账号：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="" placeholder="" id="username" name="username">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>密码：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text"  name="password" id="password">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>手机：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text"  name="phone" id="phone">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>状态：</label>
+            <div class="formControls col-xs-8 col-sm-9 skin-minimal">
+                <div class="radio-box">
+                    <input name="status" value=1 type="radio" id="sex-1" checked>
+                    <label for="sex-1">正式</label>
+                </div>
+                <div class="radio-box">
+                    <input type="radio" id="sex-2" value=0 name="status">
+                    <label for="sex-2">游客</label>
+                </div>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>是否锁定：</label>
+            <div class="formControls col-xs-8 col-sm-9 skin-minimal">
+                <div class="radio-box">
+                    <input name="lock" type="radio" value=0  checked>
+                    <label for="sex-1">否</label>
+                </div>
+                <div class="radio-box">
+                    <input type="radio" value=1 name="lock">
+                    <label for="sex-2">是</label>
+                </div>
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+                <input class="btn btn-primary radius" type="button" id="button" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+            </div>
+        </div>
+    </form>
+</article>
+
+{include file="common:footer" /}
+
+<!--请在下方写此页面业务相关的脚本-->
+{load href="__STATIC__/admin/lib/My97DatePicker/4.8/WdatePicker.js"}
+{load href="__STATIC__/admin/lib/jquery.validation/1.14.0/jquery.validate.js"}
+{load href="__STATIC__/admin/lib/jquery.validation/1.14.0/validate-methods.js"}
+{load href="__STATIC__/admin/lib/jquery.validation/1.14.0/messages_zh.js"}
+<script type="text/javascript">
+
+    $('#button').click(function () {
+        var formData  = $('.form-agent-adda').serialize();
+        $.ajax({
+            url:"{:url('agent/add')}",
+            type:'post',
+            data:formData,
+            success:function (res) {
+                if(res.code === 0 ){
+                    //失败
+                    layer.msg(res.msg,{icon:2},300);
+                    var index = parent.layer.getFrameIndex(window.name);
+                    setTimeout(function(){
+                        parent.location.reload(); //刷新父级页面
+                        parent.layer.close(index);//关闭弹出层
+                    }, 2000);
+                }else{
+                    //成功
+                    layer.msg(res.msg,{icon:1},300);
+                    var index1 = parent.layer.getFrameIndex(window.name);
+                    setTimeout(function(){
+                        parent.location.reload();
+                        parent.layer.close(index1);//关闭弹出层
+                    }, 2000);
+                }
+            }
+        })
+    })
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

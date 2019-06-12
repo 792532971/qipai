@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:73:"D:\gitee\qp_backstage\public/../application/admin\view\suggest\index.html";i:1542350692;s:61:"D:\gitee\qp_backstage\application\admin\view\common\meta.html";i:1545203841;s:63:"D:\gitee\qp_backstage\application\admin\view\common\header.html";i:1546935989;s:61:"D:\gitee\qp_backstage\application\admin\view\common\menu.html";i:1545379393;s:63:"D:\gitee\qp_backstage\application\admin\view\common\footer.html";i:1545201363;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:68:"D:\a_project\qipai\public/../application/admin\view\index\index.html";i:1560325571;s:58:"D:\a_project\qipai\application\admin\view\common\meta.html";i:1560325571;s:60:"D:\a_project\qipai\application\admin\view\common\header.html";i:1560325571;s:58:"D:\a_project\qipai\application\admin\view\common\menu.html";i:1560325571;s:60:"D:\a_project\qipai\application\admin\view\common\footer.html";i:1560325571;}*/ ?>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -24,9 +24,9 @@
     <script type="text/javascript" src="/static/menu/menu/jquery-3.2.1.min.js"></script>
     <![endif]-->
 
-    <title>意见反馈 - TXCMS_V2</title>
-    <meta name="keywords" content="">
-    <meta name="description" content="">
+<title>TXCMS_V2后台管理系统</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
 </head>
 <body>
 <header class="navbar-wrapper">
@@ -157,56 +157,66 @@
 <div class="dislpayArrow hidden-xs"><a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a></div>
 <script>
 </script>
+
 <section class="Hui-article-box">
-    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> <a href="<?php echo url('index/index'); ?>">首页</a> <span class="c-gray en">&gt;</span> 评论管理 <span class="c-gray en">&gt;</span> 意见反馈 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <nav class="breadcrumb"><i class="Hui-iconfont"></i> <a href="<?php echo url('index/index'); ?>" class="maincolor">首页</a>
+        <span class="c-999 en">&gt;</span>
+        <span class="c-666">我的桌面</span>
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
     <div class="Hui-article">
-        <div class="cl pd-5 bg-1 bk-gray mt-20">
-            <span class="l">
-                <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除
-                </a>
-            </span>
-        </div>
         <article class="cl pd-20">
-            <div class="mt-20">
-                <div class="table-responsive">
-                <table class="table table-border table-bordered table-hover table-bg table-sort">
-                    <thead>
-                    <tr class="text-c">
-                        <th width="25"><input type="checkbox" name="" value=""></th>
-                        <th width="10">ID</th>
-                        <th width="60">用户名</th>
-                        <th width="50">反馈内容</th>
-                        <th width="50">时间</th>
-                        <th width="50">状态</th>
-                        <th width="20">操作</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php if(is_array($data) || $data instanceof \think\Collection || $data instanceof \think\Paginator): $i = 0; $__LIST__ = $data;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
-                    <tr class="text-c">
-                        <td><input type="checkbox"  value="<?php echo $vo['id']; ?>" name="checkdel"></td>
-                        <td><?php echo $vo['id']; ?></td>
-                        <td><?php echo $vo['user']['nickname']; ?></td>
-                        <td class="text-l"><?php echo $vo['content']; ?></td>
-                        <td><?php echo $vo['create_time']; ?></td>
-                        <td>
-                            <?php if($vo['status'] == 0): ?><span class="label label-warning radius">未读</span>
-                            <?php else: ?><span class="label label-success radius">已读</span>
-                            <?php endif; ?>
-                        </td>
-                        <td class="td-manage">
-                            <!--<a title="编辑" href="javascript:;" onclick="member_edit('编辑','member-add.html','4','','510')" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>-->
-                            <a title="删除" href="javascript:;" onclick="member_del(<?php echo $vo['id']; ?>)" class="btn btn-warning-outline radius size-MINI" style="text-decoration:none">删除</a></td>
-                    </tr>
-                    <?php endforeach; endif; else: echo "" ;endif; ?>
-                    </tbody>
-                </table>
-                </div>
-                <div style="float: right;"><?php echo $page; ?></div>
-            </div>
-
+            <p class="f-20 text-success">欢迎使用TXCMS
+                后台管理系统！</p>
+            <p>上次登录IP：<?php echo \think\Request::instance()->session('admin_login_log.ip'); ?>  上次登录时间：<?php echo \think\Request::instance()->session('admin_login_log.create_time'); ?></p>
+            <table class="table table-border table-bordered table-bg mt-20">
+                <thead>
+                <tr>
+                    <th colspan="2" scope="col">服务器信息</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th width="30%">当前域名</th>
+                    <td><span><?php echo $config['url']; ?></span></td>
+                </tr>
+                <tr>
+                    <th width="30%">网站目录</th>
+                    <td><span><?php echo $config['document_root']; ?></span></td>
+                </tr>
+                <tr>
+                    <th width="30%">操作系统</th>
+                    <td><span><?php echo $config['server_os']; ?></span></td>
+                </tr>
+                <tr>
+                    <th width="30%">服务器端口</th>
+                    <td><span><?php echo $config['server_port']; ?></span></td>
+                </tr>
+                <tr>
+                    <th width="30%">服务器ip</th>
+                    <td><span><?php echo $config['server_ip']; ?></span></td>
+                </tr>
+                <tr>
+                    <th width="30%">WEB运行环境</th>
+                    <td><span><?php echo $config['server_soft']; ?></span></td>
+                </tr>
+                <tr>
+                    <th width="30%">php版本</th>
+                    <td><span><?php echo $config['php_version']; ?></span></td>
+                </tr>
+                <tr>
+                    <th width="30%">mysql版本</th>
+                    <td><span><?php echo $config['mysql_version']; ?></span></td>
+                </tr>
+                <tr>
+                    <th width="30%">最大上传限制</th>
+                    <td><span><?php echo $config['max_upload_size']; ?></span></td>
+                </tr>
+                </tbody>
+            </table>
         </article>
-
+        <footer class="footer">
+            <p>感谢使用TXCMS后台管理系统<br> Copyright &copy;2018 TXCMS_V1 All Rights Reserved.<br> 本后台系统由<a href="http://#/" target="_blank" title="TXCMS">txcms</a>天下纵横文化传播提供技术支持</p>
+        </footer>
     </div>
 </section>
 
@@ -218,40 +228,5 @@
 <script type="text/javascript" src="/static/admin/static/laydate/laydate.js"></script>
 
 
-<!--请在下方写此页面业务相关的脚本-->
-<script type="text/javascript" src="/static/admin/lib/My97DatePicker/4.8/WdatePicker.js"></script>
-<script type="text/javascript" src="/static/admin/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="/static/admin/lib/laypage/1.2/laypage.js"></script>
-<script type="text/javascript">
-    /*用户-删除*/
-    function member_del(id){
-        $.post('/admin.php/admin/suggest/del',{'id':id},function (res) {
-            if(res.code===0){
-                layer.msg(res.msg,{icon:2});
-            }else{
-                layer.msg(res.msg,{icon:1});
-                setTimeout(function () {window.location.reload()},2000)
-            }
-        })
-    }
-
-    /*批量删除*/
-    function datadel(){
-        var ids = [];
-        $("input:checkbox[name='checkdel']:checked").each(function(i) { // 遍历name=test的多选框
-                ids[i] = $(this).val();// 每一个被选中项的值
-        });
-        $.post('/admin.php/admin/suggest/checkboxdel',{ids:ids},function(res){
-            if(res.code===1){
-                layer.msg('批量删除成功');
-                setTimeout(function () {window.location.reload()},2000)
-            }else{
-                layer.msg('批量删除失败');
-            }
-        },'json')
-    }
-
-</script>
-<!--/请在上方写此页面业务相关的脚本-->
 </body>
 </html>

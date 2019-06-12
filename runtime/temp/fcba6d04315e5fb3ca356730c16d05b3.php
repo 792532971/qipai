@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:81:"D:\gitee\qp_backstage\public/../application/admin\view\game_room\one_hundred.html";i:1551953709;s:61:"D:\gitee\qp_backstage\application\admin\view\common\meta.html";i:1545203841;s:63:"D:\gitee\qp_backstage\application\admin\view\common\header.html";i:1546935989;s:61:"D:\gitee\qp_backstage\application\admin\view\common\menu.html";i:1545379393;s:63:"D:\gitee\qp_backstage\application\admin\view\common\footer.html";i:1545201363;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:71:"D:\a_project\qipai\public/../application/admin\view\top_info\index.html";i:1560325571;s:58:"D:\a_project\qipai\application\admin\view\common\meta.html";i:1560325571;s:60:"D:\a_project\qipai\application\admin\view\common\header.html";i:1560325571;s:58:"D:\a_project\qipai\application\admin\view\common\menu.html";i:1560325571;s:60:"D:\a_project\qipai\application\admin\view\common\footer.html";i:1560325571;}*/ ?>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -24,10 +24,9 @@
     <script type="text/javascript" src="/static/menu/menu/jquery-3.2.1.min.js"></script>
     <![endif]-->
 
-<title>游戏管理 - 百人牛牛 - TXCMS_V2</title>
+<title>管理员列表 - 管理员列表 - TXCMS_V2</title>
 <meta name="keywords" content="">
 <meta name="description" content="">
-<link rel="stylesheet" type="text/css" href="/static/admin/layui/dist/css/layui.css" />
 </head>
 <body>
 <header class="navbar-wrapper">
@@ -162,128 +161,73 @@
 <section class="Hui-article-box">
     <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> <a href="<?php echo url('index/index'); ?>">首页</a>
         <span class="c-gray en">&gt;</span>
-        游戏管理
+        消息管理
         <span class="c-gray en">&gt;</span>
-        百人牛牛 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a> </nav>
-    <div id="tab_demo" class="HuiTab">
-        <div class="tabBar clearfix"><span>房间配置</span><span>游戏操作</span></div>
-        <div class="tabCon">
-            <!--房间配置-->
+        顶部消息 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a> </nav>
+    <div class="Hui-article">
+
+        <article class="cl pd-20">
+            <div class="cl pd-5 bg-1 bk-gray mt-20">
+                <span class="l"> <a href="javascript:;" onclick="top_add('添加顶部消息','/admin.php/admin/top_info/add','800','500')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加浮动消息</a> </span>
+            </div>
             <div class="table-responsive">
                 <table class="table table-border table-bordered table-bg">
                     <thead>
+                    <tr>
+                        <th scope="col" colspan="9">消息列表</th>
+                    </tr>
                     <tr class="text-c">
-                        <th width="10">房间ID</th>
-                        <th width="40">游戏名</th>
-                        <th width="40">级别</th>
-                        <th width="40">底分</th>
-                        <th width="40">入场限制</th>
+                        <th width="10">ID</th>
+                        <th width="40">消息内容</th>
+                        <th width="40">消息类型</th>
                         <th width="40">操作</th>
                     </tr>
                     </thead>
                     <tbody>
+                    <?php if(is_array($data) || $data instanceof \think\Collection || $data instanceof \think\Paginator): $i = 0; $__LIST__ = $data;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
                     <tr class="text-c">
-                        <td><?php echo $room_data['id']; ?></td>
-                        <td><?php echo $room_data['game_id']; ?></td>
-                        <td><?php echo $room_data['level']; ?></td>
+                        <td><?php echo $vo['id']; ?></td>
+                        <td><?php echo $vo['information']; ?></td>
+                        <td><?php echo $vo['type']; ?></td>
                         <td>
-                            <?php echo $room_data['bot']; ?>
-                        </td>
-                        <td><?php echo $room_data['stint']; ?></td>
-                        <td>
-                            <a title="编辑" href="javascript:;" onclick="edit_room_setting('底分入场限制编辑','/admin.php/admin/game_room/bot_edit?id=<?php echo $room_data['id']; ?>','1','800','500')" class="ml-5 btn btn-success-outline radius size-MINI" style="text-decoration:none">配置编辑</a>
+                            <a class="btn btn-warning-outline radius size-MINI" onclick="top_del(<?php echo $vo['id']; ?>)">删除</a>
                         </td>
                     </tr>
+                    <?php endforeach; endif; else: echo "" ;endif; ?>
                     </tbody>
                 </table>
             </div>
-        </div>
-        <div class="tabCon">
-            <!--游戏配置-->
-            <table class="table table-border table-bordered table-bg">
-                <thead>
-                <tr>
-                    <th scope="col" colspan="9">游戏列表</th>
-                </tr>
-                <tr class="text-c">
-                    <th width="40">ID</th>
-                    <th width="150">游戏名</th>
-                    <th width="90">配置</th>
-                    <th width="150">游戏状态</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr class="text-c" style="height: 10px;">
-                    <td><?php echo $list_data['id']; ?></td>
-                    <td><?php echo $list_data['name']; ?></td>
-                    <td>
-                        <a style="text-decoration:none" class="btn btn-primary radius size-MINI" onClick="change_setting('修改配置','/admin.php/admin/game_list/changeSetting?id=<?php echo $list_data['id']; ?>','10001','600','270')" href="javascript:;" title="修改配置">修改配置</a>
-                    </td>
-                    <td style="width: 40px;">
-                        <form class="layui-form">
-                            <div class="layui-form-item">
-                                <div class="layui-input-block" style="margin-left: 0">
-                                    <input type="checkbox" lay-skin="switch" <?php echo !empty($list_data['status'])?"checked=''": ""; ?> lay-filter="switch" data-url="<?php echo url('game_list/changeShow',array('id'=>$list_data['id'])); ?>" lay-text="on|off">
-                                </div>
-                            </div>
-                        </form>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+        </article>
+        <div style="float: right;"><?php echo $page; ?></div>
     </div>
 </section>
-<script type="text/javascript" src="/static/admin/layui/dist/layui.all.js"></script>
-<!--<!--<script type="text/javascript" src="/static/admin/lib/jquery/1.9.1/jquery.min.js"></script>-->
+<!--<script type="text/javascript" src="/static/admin/lib/jquery/1.9.1/jquery.min.js"></script>-->
 <script type="text/javascript" src="/static/admin/lib/layer/2.4/layer.js"></script>
 <script type="text/javascript" src="/static/admin/static/h-ui/js/H-ui.js"></script>
 <script type="text/javascript" src="/static/admin/static/h-ui.admin/js/H-ui.admin.page.js"></script>
 <link rel="stylesheet" type="text/css" href="/static/admin/css/jquery-ui.css" />
 <script type="text/javascript" src="/static/admin/static/laydate/laydate.js"></script>
--->
+
 <!--请在下方写此页面业务相关的脚本-->
-<!--<script type="text/javascript" src="/static/admin/lib/My97DatePicker/4.8/WdatePicker.js"></script>-->
-<!--<script type="text/javascript" src="/static/admin/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>-->
-<!--<script type="text/javascript" src="/static/admin/lib/laypage/1.2/laypage.js"></script>-->
+<script type="text/javascript" src="/static/admin/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/static/admin/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/static/admin/lib/laypage/1.2/laypage.js"></script>
 <script type="text/javascript">
-    $(function(){ $('#tab_demo').Huitab();});
-    /*卡号-编辑*/
-    function edit_room_setting(title,url,id,w,h){
-        layer_show(title,url,w,h);
-    }
-    /*
-     参数解释：
-     title	标题
-     url		请求的url
-     id		需要操作的数据id
-     w		弹出层宽度（缺省调默认值）
-     h		弹出层高度（缺省调默认值）
-     */
-
-    /*修改配置*/
-    function change_setting(title,url,id,w,h){
-        layer_show(title,url,w,h);
-    }
-
-    layui.use('form', function(){
-        var form = layui.form;
-        form.on('switch(switch)', function(data) {
-            var url = $(this).data('url');
-            var status = data.elem.checked;//开关是否开启，true或者false
-            //后台我需要的是0或1，所以预先在js中处理change的值
-            if(status) {
-                status = 1;
-            } else {
-                status = 0;
+    /*浮动消息删除*/
+    function top_del(id){
+        $.get("<?php echo url('top_info/del'); ?>",{'id':id},function (res) {
+            if(res.code === 1){
+                layer.msg(res.msg,{icon:1});
+                window.location.reload();
+            }else{
+                layer.msg(res.msg,{icon:2})
             }
-            $.post(url, {status: status}, function(res) {
-                if(res.code) {
-                    layer.msg(res.msg);
-                }
-            });
-        });
-    });
+        },'json')
+    }
+    /*浮动消息-添加*/
+    function top_add(title,url,id,w,h){
+        layer_show(title,url,w,h);
+    }
 </script>
 <!--/请在上方写此页面业务相关的脚本-->
 </body>

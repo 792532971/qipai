@@ -125,6 +125,7 @@ class Lottery extends Base
     public function setting()
     {
         $LotteryPrimary = (new LotteryModel())->select();
+
         foreach ($LotteryPrimary as $k => &$v) {
             $v->pro = floatval($v->pro);
         }

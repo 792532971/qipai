@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"D:\gitee\qp_backstage\public/../application/admin\view\game_room\bot_edit.html";i:1541558018;s:61:"D:\gitee\qp_backstage\application\admin\view\common\meta.html";i:1545203841;s:63:"D:\gitee\qp_backstage\application\admin\view\common\footer.html";i:1545201363;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:80:"D:\a_project\qipai\public/../application/admin\view\lottery\lottery_setting.html";i:1560325571;s:58:"D:\a_project\qipai\application\admin\view\common\meta.html";i:1560325571;s:60:"D:\a_project\qipai\application\admin\view\common\footer.html";i:1560325571;}*/ ?>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -30,17 +30,31 @@
 </head>
 <body>
 <article class="cl pd-20">
-    <form action="<?php echo url('user/chongzhiSave'); ?>" method="post" class="form form-horizontal" >
+    <form action="" method="post" class="form form-horizontal" >
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>底分：</label>
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*概率(%)</span></label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text" autocomplete="off" name="bot" id="bot" value="<?php echo $data['bot']; ?>">
+                <input type="hidden" value="<?php echo $lev; ?>" id="lev" name="lev">
+                <input type="text" class="input-text" autocomplete="off" name="pro" id="pro" value="<?php echo $data['pro']; ?>">
+                <span style="color: #ff0000;font-size: xx-small">中奖百分比:概率越高中奖几率越大</span>
             </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>入场限制：</label>
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>级别：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text" autocomplete="off" name="stint" id="stint" value="<?php echo $data['stint']; ?>">
+                <input type="text" class="input-text" autocomplete="off" readonly="readonly" name="prize" id="prize" value="<?php echo $data['prize']; ?>">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>数量：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" autocomplete="off" name="num" id="num" value="<?php echo $data['num']; ?>">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>奖品名称：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" autocomplete="off" name="prize_name" id="prize_name" value="<?php echo $data['prize_name']; ?>">
             </div>
         </div>
         <div class="row cl">
@@ -60,21 +74,23 @@
 
 <script type="text/javascript">
     function tijiao(id){
-        var bot = $('#bot').val();
-        var stint = $('#stint').val();
+        var pro = $('#pro').val();
+        var num = $('#num').val();
+        var lev = $('#lev').val();
+        var prize_name = $('#prize_name').val();
         $.ajax({
-            url:"<?php echo url('game_room/edit_save'); ?>",
-            data:{'id':id,'bot':bot,'stint':stint},
+            url:"<?php echo url('lottery/settingEditSave'); ?>",
+            data:{'id':id,'pro':pro,'num':num,'prize_name':prize_name,'lev':lev},
             type:'post',
             dataType:'json',
             success:function (res) {
                 if(res.code === 1){
                     layer.msg(res.msg,{icon:1});
-                    var index1 = parent.layer.getFrameIndex(window.name);
-                    setTimeout(function(){
-                        parent.location.reload();
-                        parent.layer.close(index1);//关闭弹出层
-                    }, 2000);
+//                    var index1 = parent.layer.getFrameIndex(window.name);
+//                    setTimeout(function(){
+//                        parent.location.reload();
+//                        parent.layer.close(index1);//关闭弹出层
+//                    }, 1000);
                 }else{
                     layer.msg(res.msg,{icon:2})
                 }

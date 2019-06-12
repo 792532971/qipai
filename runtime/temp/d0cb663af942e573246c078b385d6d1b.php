@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:70:"D:\gitee\qp_backstage\public/../application/admin\view\cate\index.html";i:1545199337;s:61:"D:\gitee\qp_backstage\application\admin\view\common\meta.html";i:1545203841;s:63:"D:\gitee\qp_backstage\application\admin\view\common\header.html";i:1546935989;s:61:"D:\gitee\qp_backstage\application\admin\view\common\menu.html";i:1545379393;s:63:"D:\gitee\qp_backstage\application\admin\view\common\footer.html";i:1545201363;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:69:"D:\a_project\qipai\public/../application/admin\view\lottery\cate.html";i:1560325571;s:58:"D:\a_project\qipai\application\admin\view\common\meta.html";i:1560325571;s:60:"D:\a_project\qipai\application\admin\view\common\header.html";i:1560325571;s:58:"D:\a_project\qipai\application\admin\view\common\menu.html";i:1560325571;s:60:"D:\a_project\qipai\application\admin\view\common\footer.html";i:1560325571;}*/ ?>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -23,9 +23,11 @@
     <!--<script type="text/javascript" src="/static/admin/lib/jquery/1.9.1/jquery.min.js"></script>-->
     <script type="text/javascript" src="/static/menu/menu/jquery-3.2.1.min.js"></script>
     <![endif]-->
-    <title>角色管理 - 管理员管理 - TXCMS_V2</title>
-    <meta name="keywords" content="">
-    <meta name="description" content="">
+
+<title>转盘管理 - 转盘类目 - TXCMS_V2</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<link rel="stylesheet" type="text/css" href="/static/admin/layui/dist/css/layui.css" />
 </head>
 <body>
 <header class="navbar-wrapper">
@@ -158,40 +160,54 @@
 </script>
 
 <section class="Hui-article-box">
-    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> <a href="<?php echo url('index/index'); ?>">首页</a> <span class="c-gray en">&gt;</span> 文章列表 <span class="c-gray en">&gt;</span> 分类列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> <a href="<?php echo url('index/index'); ?>">首页</a>
+        <span class="c-gray en">&gt;</span>
+        转盘管理
+        <span class="c-gray en">&gt;</span>
+        转盘类目 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a> </nav>
     <div class="Hui-article">
         <article class="cl pd-20">
-            <div class="cl pd-5 bg-1 bk-gray"> <span class="l"> <a class="btn btn-primary radius" href="javascript:;" onclick="article_cate_add('添加分类','/admin.php/admin/cate/add','800')"><i class="Hui-iconfont">&#xe600;</i> 添加分类</a> </span> </div>
-            <div class="mt-10">
-                <div class="table-responsive">
-                <table class="table table-border table-bordered table-hover table-bg">
-                    <thead>
-                    <tr>
-                        <th scope="col" colspan="6">分类列表</th>
-                    </tr>
-                    <tr class="text-c">
-                        <th width="40">ID</th>
-                        <th width="200">分类名称</th>
-                        <th width="70">操作</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php if(is_array($data) || $data instanceof \think\Collection || $data instanceof \think\Paginator): $i = 0; $__LIST__ = $data;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
-                    <tr class="text-c">
-                        <td><?php echo $vo['id']; ?></td>
-                        <td><?php echo $vo['catename']; ?></td>
-                        <td class="f-14">
-                            <a title="编辑" href="javascript:;" class="btn btn-success-outline radius size-MINI" onclick="article_cate_edit('角色编辑','/admin.php/admin/cate/edit?id=<?php echo $vo['id']; ?>')" style="text-decoration:none">编辑</a>
-                            <a title="删除" href="javascript:;" onclick="article_cate_del(<?php echo $vo['id']; ?>)" class="ml-5 btn btn-warning-outline radius size-MINI" style="text-decoration:none">删除</a></td>
-                    </tr>
-                    <?php endforeach; endif; else: echo "" ;endif; ?>
-                    </tbody>
-                </table>
-                </div>
-            </div>
+            <table class="table table-border table-bordered table-bg">
+                <thead>
+                <tr>
+                    <th scope="col" colspan="9">转盘列表</th>
+                </tr>
+                <tr class="text-c">
+                    <th width="40">转盘ID</th>
+                    <th width="80">转盘名称</th>
+                    <th width="30">所需经验</th>
+                    <th width="30">状态</th>
+                    <th width="30">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php if(is_array($data) || $data instanceof \think\Collection || $data instanceof \think\Paginator): $i = 0; $__LIST__ = $data;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
+                <tr class="text-c" style="height: 10px;">
+                    <td><?php echo $vo['id']; ?></td>
+                    <td><?php echo $vo['lottery_name']; ?></td>
+                    <td><?php echo $vo['req_exp']; ?></td>
+                    <td style="width: 40px;">
+                        <form class="layui-form">
+                            <div class="layui-form-item">
+                                <div class="layui-input-block" style="margin-left: 0">
+                                    <input type="checkbox" lay-skin="switch" <?php echo !empty($vo['status'])?"checked=''": ""; ?> lay-filter="switch" data-url="<?php echo url('lottery/changeShow',array('id'=>$vo['id'])); ?>" lay-text="开|关">
+                                </div>
+                            </div>
+                        </form>
+                    </td>
+                    <td>
+                        <a href="javascript:;" onClick="lottery_edit('编辑','/admin.php/admin/lottery/lottery_edit?id=<?php echo $vo['id']; ?>','4','','400')" class="ml-5 btn btn-success-outline radius size-MINI" style="text-decoration:none">编辑</a>
+                    </td>
+                </tr>
+                <?php endforeach; endif; else: echo "" ;endif; ?>
+                </tbody>
+            </table>
+            <div style="float: right"></div>
+
         </article>
     </div>
 </section>
+<script type="text/javascript" src="/static/admin/layui/dist/layui.all.js"></script>
 <!--<script type="text/javascript" src="/static/admin/lib/jquery/1.9.1/jquery.min.js"></script>-->
 <script type="text/javascript" src="/static/admin/lib/layer/2.4/layer.js"></script>
 <script type="text/javascript" src="/static/admin/static/h-ui/js/H-ui.js"></script>
@@ -199,30 +215,48 @@
 <link rel="stylesheet" type="text/css" href="/static/admin/css/jquery-ui.css" />
 <script type="text/javascript" src="/static/admin/static/laydate/laydate.js"></script>
 
+
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript" src="/static/admin/lib/My97DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript" src="/static/admin/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/static/admin/lib/laypage/1.2/laypage.js"></script>
 <script type="text/javascript">
-    /*文章-分类-添加*/
-    function article_cate_add(title,url,w,h){
-        layer_show(title,url,w,h);
-    }
-    /*文章-分类-编辑*/
-    function article_cate_edit(title,url,id,w,h){
-        layer_show(title,url,w,420);
-    }
-    /*文章-分类-删除*/
-    function article_cate_del(id){
-        $.post('/admin.php/admin/cate/del',{'id':id},function (res) {
-            if(res.code=0){
-                layer.msg(res.msg);
-                setTimeout(function () {window.location.reload()},2000);
+    /*删除*/
+    function member_del(id){
+        $.post("<?php echo url('IpWhitelist/delete'); ?>",{'id':id},function (res) {
+            if(res.code===0){
+                layer.msg(res.msg,{icon:2});
             }else{
-                layer.msg(res.msg);
+                layer.msg(res.msg,{icon:1});
+                setTimeout(function () {window.location.reload()},2000)
             }
         })
     }
+
+    /*管理员-角色-编辑*/
+    function lottery_edit(title,url,id,w,h){
+        layer_show(title,url,w,h);
+    }
+
+    layui.use('form', function(){
+        var form = layui.form;
+        form.on('switch(switch)', function(data) {
+            var url = $(this).data('url');
+            var status = data.elem.checked;//开关是否开启，true或者false
+            //后台我需要的是0或1，所以预先在js中处理change的值
+            if(status) {
+                status = 1;
+            } else {
+                status = 0;
+            }
+            $.post(url, {status: status}, function(res) {
+                if(res.code) {
+                    layer.msg(res.msg);
+                }
+            });
+        });
+    });
+
 </script>
 <!--/请在上方写此页面业务相关的脚本-->
 </body>

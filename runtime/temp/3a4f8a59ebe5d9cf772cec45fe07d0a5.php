@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:71:"D:\gitee\qp_backstage\public/../application/admin\view\email\index.html";i:1541645277;s:61:"D:\gitee\qp_backstage\application\admin\view\common\meta.html";i:1545203841;s:63:"D:\gitee\qp_backstage\application\admin\view\common\header.html";i:1546935989;s:61:"D:\gitee\qp_backstage\application\admin\view\common\menu.html";i:1545379393;s:63:"D:\gitee\qp_backstage\application\admin\view\common\footer.html";i:1545201363;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:72:"D:\a_project\qipai\public/../application/admin\view\lottery\setting.html";i:1560325571;s:58:"D:\a_project\qipai\application\admin\view\common\meta.html";i:1560325571;s:60:"D:\a_project\qipai\application\admin\view\common\header.html";i:1560325571;s:58:"D:\a_project\qipai\application\admin\view\common\menu.html";i:1560325571;s:60:"D:\a_project\qipai\application\admin\view\common\footer.html";i:1560325571;}*/ ?>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -24,9 +24,10 @@
     <script type="text/javascript" src="/static/menu/menu/jquery-3.2.1.min.js"></script>
     <![endif]-->
 
-    <title>管理员列表 - 管理员列表 - TXCMS_V2</title>
-    <meta name="keywords" content="">
-    <meta name="description" content="">
+<title>游戏管理 - 百人牛牛 - TXCMS_V2</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<link rel="stylesheet" type="text/css" href="/static/admin/layui/dist/css/layui.css" />
 </head>
 <body>
 <header class="navbar-wrapper">
@@ -161,57 +162,105 @@
 <section class="Hui-article-box">
     <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> <a href="<?php echo url('index/index'); ?>">首页</a>
         <span class="c-gray en">&gt;</span>
-        管理员管理
+        转盘管理
         <span class="c-gray en">&gt;</span>
-        管理员列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a> </nav>
-    <div class="Hui-article">
-        <article class="cl pd-20">
-            <div class="cl pd-5 bg-1 bk-gray mt-20">
-                <span class="l"> <a href="javascript:;" onclick="admin_add('添加邮件','/admin.php/admin/email/add','800','500')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加邮件</a> </span>
-            </div>
+        轮盘设置 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a> </nav>
+    <div id="tab_demo" class="HuiTab">
+        <div class="tabBar clearfix"><span>白银轮盘</span><span>黄金轮盘</span><span>钻石轮盘</span></div>
+        <div class="tabCon">
+            <!--房间配置-->
             <div class="table-responsive">
+                <table class="table table-border table-bordered table-bg">
+                    <thead>
+                    <tr class="text-c">
+                        <th width="10">id</th>
+                        <th width="10">级别</th>
+                        <th width="40">转盘概率</th>
+                        <th width="40">数量(num)</th>
+                        <th width="40">奖品名称</th>
+                        <th width="40">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php if(is_array($lottery_pri) || $lottery_pri instanceof \think\Collection || $lottery_pri instanceof \think\Paginator): $i = 0; $__LIST__ = $lottery_pri;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo_1): $mod = ($i % 2 );++$i;?>
+                    <tr class="text-c">
+                        <td><?php echo $vo_1['id']; ?></td>
+                        <td><?php echo $vo_1['prize']; ?></td>
+                        <td><?php echo $vo_1['pro']; ?>%</td>
+                        <td><?php echo $vo_1['num']; ?></td>
+                        <td><?php echo $vo_1['prize_name']; ?></td>
+                        <td>
+                            <a title="编辑" href="javascript:;" onclick="edit_lottery_setting('配置','/admin.php/admin/lottery/lottery_setting?id=<?php echo $vo_1['id']; ?>&lev=1','1','800','500')" class="ml-5 btn btn-success-outline radius size-MINI" style="text-decoration:none">配置编辑</a>
+                        </td>
+                    </tr>
+                    <?php endforeach; endif; else: echo "" ;endif; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="tabCon">
+            <!--游戏配置-->
             <table class="table table-border table-bordered table-bg">
                 <thead>
-                <tr>
-                    <th scope="col" colspan="9">邮件列表</th>
-                </tr>
                 <tr class="text-c">
-                    <th width="10">ID</th>
-                    <th width="40">用户id</th>
-                    <th width="40">标题</th>
-                    <th width="90">内容</th>
-                    <th width="100">创建时间</th>
-                    <th width="100">领取时间</th>
-                    <th width="20">状态</th>
-                    <th width="30">操作</th>
+                    <th width="10">id</th>
+                    <th width="10">级别</th>
+                    <th width="40">转盘概率</th>
+                    <th width="40">数量(num)</th>
+                    <th width="40">奖品名称</th>
+                    <th width="40">操作</th>
                 </tr>
                 </thead>
                 <tbody>
-                <?php if(is_array($data) || $data instanceof \think\Collection || $data instanceof \think\Paginator): $i = 0; $__LIST__ = $data;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
+                <?php if(is_array($lottery_mid) || $lottery_mid instanceof \think\Collection || $lottery_mid instanceof \think\Paginator): $i = 0; $__LIST__ = $lottery_mid;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo_2): $mod = ($i % 2 );++$i;?>
                 <tr class="text-c">
-                    <td><?php echo $vo['id']; ?></td>
-                    <td><?php echo $vo['email_user_name']; ?></td>
-                    <td><?php echo $vo['title']; ?></td>
-                    <td><?php echo $vo['context']; ?></td>
-                    <td><?php echo $vo['create_time']; ?></td>
-                    <td><?php echo $vo['read_time']; ?></td>
-                    <td class="td-status">
-                        <?php if($vo['status'] == 0): ?><span class="label label-warning radius">未读</span>
-                        <?php else: ?><span class="label label-success radius">已读</span>
-                        <?php endif; ?>
+                    <td><?php echo $vo_2['id']; ?></td>
+                    <td><?php echo $vo_2['prize']; ?></td>
+                    <td><?php echo $vo_2['pro']; ?>%</td>
+                    <td><?php echo $vo_2['num']; ?></td>
+                    <td><?php echo $vo_2['prize_name']; ?></td>
+                    <td>
+                        <a title="编辑" href="javascript:;" onclick="edit_lottery_setting('配置','/admin.php/admin/lottery/lottery_setting?id=<?php echo $vo_2['id']; ?>&lev=2','1','800','500')" class="ml-5 btn btn-success-outline radius size-MINI" style="text-decoration:none">配置编辑</a>
                     </td>
-                    <td class="td-manage">
-                        <a title="编辑" href="javascript:;" onclick="admin_edit('邮件编辑','/admin.php/admin/email/edit?id=<?php echo $vo['id']; ?>','1','800','500')" class="ml-5 btn btn-success-outline radius size-MINI" style="text-decoration:none">编辑</a>
-                        <a title="删除" href="javascript:;" onclick="email_del(<?php echo $vo['id']; ?>)" class="ml-5 btn btn-warning-outline radius size-MINI" style="text-decoration:none">删除</a></td>
                 </tr>
                 <?php endforeach; endif; else: echo "" ;endif; ?>
                 </tbody>
             </table>
+        </div>
+        <div class="tabCon">
+            <!--房间配置-->
+            <div class="table-responsive">
+                <table class="table table-border table-bordered table-bg">
+                    <thead>
+                    <tr class="text-c">
+                        <th width="10">id</th>
+                        <th width="10">级别</th>
+                        <th width="40">转盘概率</th>
+                        <th width="40">数量(num)</th>
+                        <th width="40">奖品名称</th>
+                        <th width="40">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php if(is_array($lottery_hig) || $lottery_hig instanceof \think\Collection || $lottery_hig instanceof \think\Paginator): $i = 0; $__LIST__ = $lottery_hig;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo_3): $mod = ($i % 2 );++$i;?>
+                    <tr class="text-c">
+                        <td><?php echo $vo_3['id']; ?></td>
+                        <td><?php echo $vo_3['prize']; ?></td>
+                        <td><?php echo $vo_3['pro']; ?>%</td>
+                        <td><?php echo $vo_3['num']; ?></td>
+                        <td><?php echo $vo_3['prize_name']; ?></td>
+                        <td>
+                            <a title="编辑" href="javascript:;" onclick="edit_lottery_setting('配置','/admin.php/admin/lottery/lottery_setting?id=<?php echo $vo_3['id']; ?>&lev=3','1','800','500')" class="ml-5 btn btn-success-outline radius size-MINI" style="text-decoration:none">配置编辑</a>
+                        </td>
+                    </tr>
+                    <?php endforeach; endif; else: echo "" ;endif; ?>
+                    </tbody>
+                </table>
             </div>
-        </article>
-        <div style="float: right;"><?php echo $page; ?></div>
+        </div>
     </div>
 </section>
+<script type="text/javascript" src="/static/admin/layui/dist/layui.all.js"></script>
 <!--<script type="text/javascript" src="/static/admin/lib/jquery/1.9.1/jquery.min.js"></script>-->
 <script type="text/javascript" src="/static/admin/lib/layer/2.4/layer.js"></script>
 <script type="text/javascript" src="/static/admin/static/h-ui/js/H-ui.js"></script>
@@ -224,35 +273,28 @@
 <script type="text/javascript" src="/static/admin/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/static/admin/lib/laypage/1.2/laypage.js"></script>
 <script type="text/javascript">
-    /*
-     参数解释：
-     title	标题
-     url		请求的url
-     id		需要操作的数据id
-     w		弹出层宽度（缺省调默认值）
-     h		弹出层高度（缺省调默认值）
-     */
-    /*管理员-增加*/
-    function admin_add(title,url,w,h){
+    $(function(){ $('#tab_demo').Huitab();});
+    function edit_lottery_setting(title,url,id,w,h){
         layer_show(title,url,w,h);
     }
-    /*管理员-删除*/
-    function email_del(id){
-        $.post('/admin.php/admin/email/del',{'id':id},function (res) {
-            if(res.code === 0){
-                layer.msg(res.msg,{icon:2},300);
-            }else{
-                layer.msg(res.msg,{icon:1},300);
-                setTimeout(function () {
-                    window.location.reload();
-                },1500)
+    layui.use('form', function(){
+        var form = layui.form;
+        form.on('switch(switch)', function(data) {
+            var url = $(this).data('url');
+            var status = data.elem.checked;//开关是否开启，true或者false
+            //后台我需要的是0或1，所以预先在js中处理change的值
+            if(status) {
+                status = 1;
+            } else {
+                status = 0;
             }
-        })
-    }
-    /*管理员-编辑*/
-    function admin_edit(title,url,id,w,h){
-        layer_show(title,url,w,h);
-    }
+            $.post(url, {status: status}, function(res) {
+                if(res.code) {
+                    layer.msg(res.msg);
+                }
+            });
+        });
+    });
 </script>
 <!--/请在上方写此页面业务相关的脚本-->
 </body>
